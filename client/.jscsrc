@@ -1,0 +1,25 @@
+{
+  "requireCurlyBraces": ["if", "else", "for", "while", "do", "try", "catch"],
+  "requireSpaceAfterKeywords": ["if", "else", "for", "while", "do", "try", "catch"],
+  "requireParenthesesAroundIIFE": true,
+  "requireSpacesInFunctionExpression": {
+    "beforeOpeningCurlyBrace": true
+  },
+  "disallowSpacesInsideArrayBrackets": true,
+  "disallowSpacesInsideParentheses": true,
+  "requireSpacesInsideObjectBrackets": "all",
+  "disallowQuotedKeysInObjects": true,
+  "disallowSpaceAfterObjectKeys": true,
+  "requireCommaBeforeLineBreak": true,
+  "disallowSpaceAfterPrefixUnaryOperators": ["++", "--", "+", "-", "~", "!"],
+  "disallowSpaceBeforePostfixUnaryOperators": ["++", "--", "+", "-", "~", "!"],
+  "requireSpaceBeforeBinaryOperators": ["+", "-", "/", "*", "=", "==", "===", "!=", "!=="],
+  "requireSpaceAfterBinaryOperators": ["+", "-", "/", "*", "=", "==", "===", "!=", "!=="],
+  "requireCamelCaseOrUpperCaseIdentifiers": true,
+  "disallowKeywords": ["with"],
+  "disallowMultipleLineBreaks": true,
+  "validateQuoteMarks": "'",
+  "validateIndentation": 2,
+  "disallowKeywordsOnNewLine": ["else", "catch"],
+  "requireLineFeedAtFileEnd": true
+}

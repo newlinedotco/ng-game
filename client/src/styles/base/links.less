@@ -1,0 +1,25 @@
+/*
+ * Defines global link rules
+ */
+
+a[href] {
+  display: inline-block;
+  text-decoration: none;
+  border-bottom: 1px solid;
+  .transition(color 200ms, border-color 200ms);
+  
+  &:hover {
+    border-color: transparent;
+  }
+
+  &:active {
+    .translateY(1px);
+    
+  }
+}
+
+a:focus {
+  outline: thin dotted #333;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}

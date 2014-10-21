@@ -1,0 +1,75 @@
+.game {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 75rem;
+  font-size: 12px;
+  
+  #gameCanvas {
+    background-image: red url('/images/bodybg.jpg');
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    position: absolute;
+    background-size: cover;
+    background-position: center,center;
+  }
+
+  .play-button {
+    position: absolute;
+    left: 45%;
+    top: 50%;
+    border-radius: 3px;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate3d(-50%,-50%,0);
+    transform: translate3d(-50%,-50%,0);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    cursor: pointer;
+    font-family: "Avenir Next W01 Light",Helvetica,Arial,sans-serif;
+    font-size: 7rem;
+    white-space: nowrap;
+    text-transform: uppercase;
+    background-color: #fff;
+    overflow: hidden;
+    z-index: 202;
+
+    &:hover {
+      background-color: #6d3ca9;
+      color: #fff;
+    }
+
+    i {
+      background-color: #6d3ca9;
+      border-color: #6d3ca9;
+      color: #fff;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      -o-user-select: none;
+      user-select: none;
+      cursor: pointer;
+      display: inline-block;
+      width: 16rem;
+      line-height: 17rem;
+      font-size: 11rem;
+      vertical-align: middle;
+      text-align: center;
+      height: 17rem;
+    }
+
+    span {
+      vertical-align: middle;
+      margin: 0 3rem;
+
+      &:hover {
+      }
+    }
+  }
+}

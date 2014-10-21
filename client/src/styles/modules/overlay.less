@@ -1,0 +1,61 @@
+.overlay-bar {
+  -webkit-transform: translate3d(0,0,0);
+  transform: translate3d(0,0,0);
+  position: absolute;
+  height: 100%;
+  width: 75rem;
+  right: 0;
+  z-index: 400;
+  box-shadow: 0 0 25rem rgba(0,0,0,0.3);
+
+  background-size: cover;
+  background-position: center,center;
+  // box-shadow: inset 60rem 0 25rem -60rem rgba(0,0,0,0.1);
+  .overlay-header {
+    background-color: #3FBCF1;
+    border-color: #3FBCF1;
+    color: #ffffff;
+    height: 17rem;
+
+    .overlay-title {
+      font-family: "AvenirNextLTW01-Regular",Helvetica,Arial,sans-serif;
+      font-size: 5rem;
+      letter-spacing: 1px;
+      display: inline-block;
+      position: absolute;
+      left: 18rem;
+      right: 18rem;
+      top: 0;
+      line-height: 17rem;
+      text-transform: uppercase;
+      text-align: center;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+  }
+
+  .overlay-content {
+    .feed {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+
+      .feed-item {
+        padding: 4rem;
+        background-color: #fff;
+        border-bottom: .5rem solid #f5f5f5;
+
+        .feed-header {
+          font-family: "AvenirNextLTW01-Regular",Helvetica,Arial,sans-serif;
+          font-size: 4rem;
+          color: black;
+          display: inline-block;
+          vertical-align: top;
+          line-height: normal;
+        }
+      }
+    }
+  }
+}

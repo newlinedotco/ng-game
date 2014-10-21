@@ -1,0 +1,15 @@
+{
+  "name": "client",
+  "version": "0.0.0",
+  "dependencies": {
+    "angular": "~1.2.9",
+    "lesshat": "~3.0.0",
+    "angular-ui-router": "~0.2.11",
+    "phaser": "~2.1.1",
+    "ionicons": "~1.5.2",
+    "jquery": "~2.1.1",
+    "lodash": "~2.4.1",
+    "angular-socket-io": "~0.6.0",
+    "ngDialog": "~0.2.14"
+  }
+}

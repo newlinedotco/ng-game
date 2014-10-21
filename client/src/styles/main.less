@@ -1,0 +1,52 @@
+/*
+ * This file includes all your components and modules. It shouldn’t contain any
+ * CSS rules.
+ * Based on ’SMACSS’ (Scalable and Modular Architecture for CSS). Read more at
+ * [http://smacss.com/]
+ *
+ * - Base:
+ *   - reset
+ *
+ * - Component:
+ *   - main idea: component is a reusable page element
+ *   - all your buttons, form inputs,…
+ *
+ * - Module:
+ *   - bigger page block, *uses components*, *defines the final component layout*,
+ *     *not always* reusable
+ *   - footer, header, user profile,…
+ */
+
+@import "helpers";
+
+/*
+ * Import Bower components (include path is predefined)
+ */
+@import "lesshat/build/lesshat";
+@import "ionicons/less/ionicons";
+
+/*
+* Base
+*/
+@import "base/normalize";
+@import "base/global";
+@import "base/fonts";
+@import "base/links";
+
+
+/*
+* Components
+*/
+@import "components/column";
+@import "components/icons";
+@import "components/flexbox";
+
+/*
+* Modules
+*/
+@import "modules/module";
+@import "modules/game";
+@import "modules/menu";
+@import "modules/overlay";
+@import "modules/navbar";
+

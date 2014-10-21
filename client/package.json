@@ -1,0 +1,24 @@
+{
+  "name": "client",
+  "version": "0.0.0",
+  "description": "",
+  "homepage": "",
+  "bugs": "",
+  "keywords": [],
+  "contributors": [
+    "John Doe <johndoe@example.org>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "~3.8.0",
+    "pho-devstack": "~1.4.0",
+    "node.extend": "~1.0.10"
+  },
+  "scripts": {
+    "start": "gulp & open dist/index.html"
+  }
+}

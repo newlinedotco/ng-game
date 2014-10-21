@@ -1,0 +1,49 @@
+/*
+ * Column layout definition
+ *
+ * - Basic column widths (full width: 960px)
+ *   -       .half: 460px
+ *   -      .third: 300px
+ *   - .two-thirds: 600px
+ *   -      .sixth: 140px
+ *
+ * - Usage:
+ *   .group
+ *     - .column.(size)
+ */
+
+.column {
+  float: left;
+  margin: 0 10px;
+  list-style-type: none;
+
+  &.half {
+    width: 460px;
+  }
+
+  &.third {
+    width: 300px;
+  }
+
+  &.two-thirds {
+    width: 600px;
+  }
+
+  &.sixth {
+    width: 140px;
+  }
+
+  &:first-child,
+  &.half:nth-child(2n+1),
+  &.third:nth-child(3n+1),
+  &.sixth:nth-child(6n+1) {
+    margin-left: 0;
+  }
+
+  &:last-child,
+  &.half:nth-child(2n+2),
+  &.third:nth-child(3n+3),
+  &.sixth:nth-child(6n+6) {
+    margin-right: 0;
+  }
+}

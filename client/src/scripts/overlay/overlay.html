@@ -1,0 +1,28 @@
+<div class='overlay-bar'>
+  <div class="overlay-header cs-base" ng-class="colorScheme">
+    <i class="overlay-refresh-icon icon-tz-nav-refresh"></i>
+    <i class="overlay-refresh-icon icon-tz-nav-arrow-l"></i>
+      <span class="overlay-header-separator"></span>
+      <span class="overlay-title" ng-bind="ctrl.title"></span>
+      <div class="overlay-right">
+        <span class="overlay-header-separator"></span>
+          <i class="overlay-close-icon icon-tz-nav-close"></i> 
+      </div>
+  </div>
+
+  <div class="overlay-content">
+    <ul class="feed">
+      <li class="feed-item" ng-repeat='item in ctrl.feed | limitTo: ctrl.feedLimit'>
+        <div class="feed-header">
+        </div>
+        <div class="feed-content">
+          <i class='ion'
+              ng-class="{
+                'ion-person-add': item.eventName === 'join'
+              }"></i>
+          {{ item.msg }}
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
