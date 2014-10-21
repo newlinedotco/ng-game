@@ -1,7 +1,7 @@
 var util = require('util');
 var Player = require('./Player');
 var Map = require('./Map');
-var mapData = require('../data/maps.json');
+var mapData = require('./../data/maps.json');
 
 
 g = {

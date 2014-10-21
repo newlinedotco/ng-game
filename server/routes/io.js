@@ -2,8 +2,8 @@ module.exports =
 (function(app, io) {
 
   var util = require('util');
-  var Player = require('../models/Player');
-  var Map = require('../models/Map');
+  var Player = require('./../models/Player');
+  var Map = require('./../models/Map');
 
   g = {
     io: undefined,
