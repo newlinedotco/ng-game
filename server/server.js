@@ -1,5 +1,6 @@
 #!/usr/bin/env node
-var express = require('express');
+var express = require('express'),
+    path    = require('path');
 var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
@@ -9,10 +10,10 @@ server.listen(port, function() {
   console.log("Running on port ", port);
 });
 
-app.use(express.static('./../client/dist'));
+app.use(express.static(path.join(__dirname, '../client/dist'), { maxAge: 86400000 }));
 
 app.get('/', function(req, res) {
-  res.sendfile('./../client/dist/index.html');
+  res.sendfile(path.join(__dirname, '../client/dist/index.html'));
 });
 
 require('./routes/io.js')(app, io);
