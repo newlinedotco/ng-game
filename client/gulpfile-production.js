@@ -40,6 +40,18 @@ var pho = require('pho-devstack')(gulp, {
     // cdn: 'http://example.com' // url to your CDN server
     // cdn: '/', // uncomment if you are using absolute paths without CDN
   }),
+  dist: {
+    /* Directories and file patterns for build output */
+    markupDir: 'production/',
+    scriptDir: 'production/scripts/',
+    styleDir: 'production/styles/',
+    imageDir: 'production/images/',
+    spriteDir: 'production/images/sprites/',
+    scriptMain: 'main.js',
+    markupFiles: '**/*.html',
+    scriptFiles: '*.js',
+    styleFiles: '*.css'
+  },
   copy: [
   'images/**/*', 
   'humans.txt', 

@@ -1,0 +1,13 @@
+[
+  {
+    "background":"assets/background1.png",
+    "enemies": [
+      {
+        "type": "1",
+        "speed": 300,
+        "count": 6,
+        "maxHealth": 20
+      }
+    ]
+  }
+]

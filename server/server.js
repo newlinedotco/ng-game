@@ -10,10 +10,10 @@ server.listen(port, function() {
   console.log("Running on port ", port);
 });
 
-app.use(express.static(path.join(__dirname, '../client/dist'), { maxAge: 86400000 }));
+app.use(express.static(path.join(__dirname, '../client/production'), { maxAge: 86400000 }));
 
 app.get('/', function(req, res) {
-  res.sendfile(path.join(__dirname, '../client/dist/index.html'));
+  res.sendfile(path.join(__dirname, '../client/production/index.html'));
 });
 
 require('./routes/io.js')(app, io);
