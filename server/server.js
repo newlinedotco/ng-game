@@ -11,8 +11,8 @@ server.listen(port, function() {
 
 app.use(express.static(__dirname + '/../client/dist'));
 
-// app.get('/', function(req, res) {
-//   res.sendfile(__dirname + '/../public/index.html');
-// });
+app.get('/', function(req, res) {
+  res.sendfile(__dirname + '/../client/dist/index.html');
+});
 
 require('./routes/io.js')(app, io);
