@@ -9,10 +9,10 @@ server.listen(port, function() {
   console.log("Running on port ", port);
 });
 
-app.use(express.static(__dirname + '/../client/dist'));
+app.use(express.static('./../client/dist'));
 
 app.get('/', function(req, res) {
-  res.sendfile(__dirname + '/../client/dist/index.html');
+  res.sendfile('./../client/dist/index.html');
 });
 
 require('./routes/io.js')(app, io);
