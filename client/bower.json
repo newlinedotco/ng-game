@@ -10,6 +10,7 @@
     "jquery": "~2.1.1",
     "lodash": "~2.4.1",
     "angular-socket-io": "~0.6.0",
-    "ngDialog": "~0.2.14"
+    "ngDialog": "~0.2.14",
+    "font-awesome": "~4.2.0"
   }
 }

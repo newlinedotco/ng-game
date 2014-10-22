@@ -3,12 +3,8 @@
 
 # TEAM
 
-    <name> -- <role> -- <twitter>
-
-# THANKS
-
-    <name>
+    Ari Lerner - @auser
 
 # TECHNOLOGY COLOPHON
 
-    Pho devstack
+    Fullstack.io

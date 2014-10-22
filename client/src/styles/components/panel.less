@@ -1,0 +1,99 @@
+.panel {
+  font: 16px/22px "Open Sans", sans-serif;
+  padding: 20px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  position: relative;
+  display: inline-block;
+  width: 300px;
+  height: 160px;
+  margin: 10px;
+  font-size: 32px;
+  font-weight: 600;
+  color: #fff;
+  overflow: hidden;
+  border-radius: 8px;
+  a {
+    position: relative;
+    display: block;
+    padding: 12px 25px 25px 25px;
+    color: #fff;
+    text-decoration: none;
+    z-index: 2;
+    span {
+      display: block;
+      font-size: 96px;
+      font-weight: 700;
+      line-height: 96px;
+    }
+  }
+  &:after {
+    position: absolute;
+    font-family: FontAwesome;
+    color: rgba(0, 0, 0, 1);
+    z-index: 1;
+    transition: all .5s;
+    // Use this to prevent misplacing background caused by default line-height
+    line-height: normal;
+  }
+  &.play {
+    background-color: #b8aa0e;
+    &:after {
+      content: "\f11b";
+      font-size: 200px;
+      color: darken(#b8aa0e, 4%);
+      top: 45px;
+      right: 60px;
+      -webkit-transform: rotate(45deg);
+      transform: rotate(45deg);
+    }
+    &:hover:after {
+      top: 8px;
+    }
+  }
+  &.create{
+    background-color: #0377c0;
+    a {
+      border: 0;
+    }
+    &:after {
+      content: "\f0fe";
+      font-size: 180px;
+      color: darken(#0377c0, 4%);
+      top: 30px;
+      right: 35px;
+    }
+    &:hover:after {
+      top: -5px;
+    }
+  }
+  &.page {
+    background-color: #279824;
+    &:after {
+      content: "\f15c";
+      font-size: 160px;
+      color: darken(#279824, 4%);
+      top: 62px; 
+      right: 39px;
+    }
+    &:hover:after {
+      top: 24px; 
+    }
+  }
+  &.user {
+    background-color: #fc1c3e;
+    &:after {
+      content: "\f007";
+      font-size: 200px;
+      color: darken(#fc1c3e, 8%);
+      top: 45px;
+      right: 35px;
+    }
+    &:hover:after {
+      top: 7px;
+    }
+  }
+  &:hover:after {
+    transition: all .5s;
+  }
+}

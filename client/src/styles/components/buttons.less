@@ -1,0 +1,155 @@
+/* ======================================== \
+ ========== OBVIOUS BUTTONS CSS ===========
+\========================================= */
+/**
+ * Obvious Buttons 0.1
+ * https://github.com/skidding/obvious-buttons
+ *
+ * (c) 2014+ Ovidiu Cherecheș
+ * http://skidding.mit-license.org
+ */
+// Variables
+
+@default-background-color: #fafafa;
+@default-text-color: #222;
+
+@primary-background-color: #0088cc;
+@primary-text-color: #fafafa;
+
+@info-background-color: #49afcd;
+@info-text-color: #fafafa;
+
+@success-background-color: #5bb75b;
+@success-text-color: #fafafa;
+
+@warning-background-color: #faa732;
+@warning-text-color: #fafafa;
+
+@danger-background-color: #da4f49;
+@danger-text-color: #fafafa;
+
+@inverse-background-color: #363636;
+@inverse-text-color: #fafafa;
+
+
+// Cross-browser helpers
+
+.boxShadow (@statement) {
+  -webkit-box-shadow: @statement;
+  -moz-box-shadow: @statement;
+  box-shadow: @statement;
+}
+.transition (@property, @duration, @transition: linear) {
+  -webkit-transition-property: @property;
+  -webkit-transition-duration: @duration;
+  -webkit-transition-timing-function: @transition;
+  -moz-transition-property: @property;
+  -moz-transition-duration: @duration;
+  -moz-transition-timing-function: @transition;
+  -ms-transition-property: @property;
+  -ms-transition-duration: @duration;
+  -ms-transition-timing-function: @transition;
+  -o-transition-property: @property;
+  -o-transition-duration: @duration;
+  -o-transition-timing-function: @transition;
+  transition-property: @property;
+  transition-duration: @duration;
+  transition-timing-function: @transition;
+}
+
+
+.buttonColor (@background, @text) {
+  background: @background;
+  color: @text;
+
+  &:hover,
+  &:focus {
+    background: darken(@background, 8%);
+    color: @text;
+  }
+}
+.buttonSize (@height, @depth, @font-size) {
+  height: @height;
+  // Fine-tuned to look match font size
+  padding: 0 @font-size - 4;
+  border-radius: @depth + 2;
+  // Make button look 3D by giving a thicker border at the bottom
+  .boxShadow(inset 0 -@depth 0 0 rgba(0, 0, 0, 0.15));
+  font-size: @font-size;
+  line-height: @height - @depth;
+
+  i {
+    line-height: @height - @depth;
+  }
+  &:active, &:active i {
+    line-height: @height;
+  }
+  &.button-primary, &.button-info, &.button-success, &.button-warning, &.button-danger, &.button-inverse {
+    .boxShadow(inset 0 -@depth 0 0 rgba(0, 0, 0, 0.2));
+  }
+}
+
+.button {
+  // Add .button-inline class for inline-block display
+  display: block;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  .buttonSize(40px, 3px, 18px);
+  .transition(background-color, 0.2s);
+  .buttonColor(@default-background-color, @default-text-color);
+
+  &.button-primary {
+    .buttonColor(@primary-background-color, @primary-text-color);
+  }
+  &.button-info {
+    .buttonColor(@info-background-color, @info-text-color);
+  }
+  &.button-success {
+    .buttonColor(@success-background-color, @success-text-color);
+  }
+  &.button-warning {
+    .buttonColor(@warning-background-color, @warning-text-color);
+  }
+  &.button-danger {
+    .buttonColor(@danger-background-color, @danger-text-color);
+  }
+  &.button-inverse {
+    .buttonColor(@inverse-background-color, @inverse-text-color);
+  }
+
+  span {
+    // We need this extra span because there's a WebKit bug that sometimes
+    // misses click events when the text inside a the element moves between
+    // mousedown and mouseup: http://stackoverflow.com/q/15679787/128816
+    pointer-events: none;
+  }
+
+  &:hover {
+    text-decoration: none;
+  }
+  &:focus {
+    text-decoration: none;
+    outline: none;
+  }
+  &:active {
+    // Remove excess of bottom border when clicking on the button in order to
+    // make it seem like it's physically pressed
+    .boxShadow(~"none !important");
+  }
+}
+.button-small {
+  .buttonSize(30px, 2px, 14px);
+}
+.button-large {
+  .buttonSize(50px, 4px, 22px);
+}
+.button-xlarge {
+  .buttonSize(60px, 5px, 26px);
+}
+
+
+.button-inline {
+  display: inline-block;
+  vertical-align: middle;
+}
