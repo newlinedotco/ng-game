@@ -4,14 +4,14 @@ angular.module('app.game')
   var linkFn = function(scope, ele, attrs) {
     var w = angular.element($window);
     w.bind('resize', function(evt) {
-      console.log('resized');
+      // If the window is resized
     });
 
     mySocket.then(function(sock) {
       require('./main.js')(
         ele, scope, sock, 
         scope.ngModel, 
-        scope.mapId || new Date().getTime(), 
+        scope.mapId, 
         $injector);
     });
   };
@@ -23,7 +23,7 @@ angular.module('app.game')
     },
     template: '<div id="game-canvas"></div>',
     compile: function(iEle, iAttrs) {
-      return linkFn
+      return linkFn;
     }
   }
 })

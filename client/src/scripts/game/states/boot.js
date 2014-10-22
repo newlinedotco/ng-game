@@ -20,8 +20,6 @@ module.exports = (function(Game) {
 
       Game.width  = this.game.width;
       Game.height = this.game.height;
-
-      console.log('Game', Game.width, Game.height);
     },
     init: function () {
       this.input.maxPointers = 1;

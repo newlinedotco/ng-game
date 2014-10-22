@@ -1,7 +1,6 @@
 angular.module('app.network')
 .factory('FeedItem', function() {
   var FeedItem = function(eventName, data) {
-    console.log('FeedItem ->', data);
     this.id = data.id;
     this.eventName = eventName;
 
@@ -17,11 +16,16 @@ angular.module('app.network')
       list = [];
 
   this.list = list;
+  this.maxLength = 10;
 
   var addToList = function(name, data) {
     $rootScope.$apply(function() {
       var item = new FeedItem(name, data);
-      list.push(item);
+      list.unshift(item);
+
+      if (list.length > service.maxLength) {
+        list.splice(service.maxLength, list.length - service.maxLength);
+      }
     });
   }
 

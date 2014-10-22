@@ -53,7 +53,6 @@ module.exports = (function(Game) {
 
       // Next level and gameover graphics
       this.load.image('next_level', 'assets/levelcomplete-bg.png');
-      this.load.image('youwin', 'assets/youwin-bg.png');
       this.load.image('gameover', 'assets/gameover-bg.png');
       this.load.image('new', 'assets/new.png');
 
@@ -111,8 +110,12 @@ module.exports = (function(Game) {
 
     startMainMenu: function() {
       if (!!this.ready) {
-        // this.game.state.start('MainMenu');
-        this.game.state.start('Play');
+        if (Game.mapId) {
+          this.game.state.start('Play');
+        } else {
+          this.game.state.start('MainMenu');
+        }
+        // this.game.state.start('Play');
         // this.game.state.start('NextLevel');
       }
     },

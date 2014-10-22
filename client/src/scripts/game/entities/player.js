@@ -23,7 +23,7 @@ module.exports = (function(Game) {
       this.shotDelay  = 100;
 
       // Number of bullets per shot
-      this.numBullets   = 1;
+      this.numBullets   = 10;
       this.timerBullet;
 
       this.shieldsEnabled = false;
@@ -54,7 +54,7 @@ module.exports = (function(Game) {
     this.explosion.anchor.setTo(0.5, 0.5);
     this.explosion.alpha = 0;
 
-    this.health = 10;
+    this.health = 100;
     // Anchor
     this.anchor.setTo(0.5, 0.5);
     // Rotate 90s so it's facing up
@@ -79,7 +79,7 @@ module.exports = (function(Game) {
     if (this.stateQueue.length > this.maxQueueSize) {
       this.stateQueue.splice(this.minQueueSize, this.maxQueueSize - this.minQueueSize);
     }
-    this.stateQueue.push(data);
+    this.stateQueue.unshift(data);
   };
 
   Game.Prefabs.Player.prototype.updateHero = function() {
@@ -121,18 +121,14 @@ module.exports = (function(Game) {
       var tweenTime = Math.abs(this.previousStateTime - (earliestQueue.timestamp + 10));
       this.game.add.tween(this)
         .to({
-          x: earliestQueue.x, //Rel * (Game.width == 0 ? 1 : Game.width),
-          y: earliestQueue.y, //Rel * (Game.height == 0 ? 1 : Game.height),
+          x: earliestQueue.x,
+          y: earliestQueue.y,
           rotation: earliestQueue.rotation
         }, tweenTime, 
         Phaser.Easing.Linear.None, true, 0);
 
       this.previousStateTime = earliestQueue.timestamp;
     }
-    // this.body.velocity.x = Math.cos(rotation) * this.speed * 
-    // this.body.x = this.x;
-    // this.body.y = this.y;
-    // this.body.rotation = this.rotation;
   };
 
   Game.Prefabs.Player.prototype.die = function(autoKill){
@@ -142,15 +138,7 @@ module.exports = (function(Game) {
 
       // Explosion
       if(!autoKill){
-        this.explosion.reset(this.x, this.y);
-        this.explosion.angle = this.game.rnd.integerInRange(0, 360);
-        this.explosion.alpha = 0;
-        this.explosion.scale.x = 0.2;
-        this.explosion.scale.y = 0.2;
-        this.game.add.tween(this.explosion)
-          .to({alpha: 1, angle: "+30"}, 200, Phaser.Easing.Linear.NONE, true, 0).to({alpha: 0, angle: "+30"}, 300, Phaser.Easing.Linear.NONE, true, 0);
-        this.game.add.tween(this.explosion.scale)
-          .to({x:1.5, y:1.5}, 500, Phaser.Easing.Cubic.Out, true, 0);
+        this.showExplosion();
       }
     }
   };
@@ -163,10 +151,22 @@ module.exports = (function(Game) {
         this.die();
       } else {
         this.enableShield(0.3);
+        this.showExplosion();
       }
 
       return true;
     }
+  };
+
+  Game.Prefabs.Player.prototype.showExplosion = function() {
+    this.explosion.reset(this.x, this.y);
+    this.explosion.alpha = 0;
+    this.explosion.scale.x = 0.2;
+    this.explosion.scale.y = 0.2;
+    this.game.add.tween(this.explosion)
+    .to({alpha: 1, angle: "+30"}, 200, Phaser.Easing.Linear.NONE, true, 0).to({alpha: 0, angle: "+30"}, 300, Phaser.Easing.Linear.NONE, true, 0);
+    this.game.add.tween(this.explosion.scale)
+    .to({x:1.5, y:1.5}, 500, Phaser.Easing.Cubic.Out, true, 0);
   };
 
   Game.Prefabs.Player.prototype.enableShield = function(duration) {

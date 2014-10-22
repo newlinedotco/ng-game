@@ -7,7 +7,7 @@ module.exports =
   
   var height  = parseInt(ele.css('height'), 10),
       width   = parseInt(ele.css('width'), 10);
-  var game = new Phaser.Game(width, height, Phaser.AUTO, 'gameCanvas');
+  var game = new Phaser.Game(width, height, Phaser.AUTO, 'game-canvas');
 
   var Game    = require('./states'),
       states  = Game.States;
@@ -40,33 +40,25 @@ module.exports =
 
   // Cleanup
   scope.$on('$destroy', function() {
+    socket.emit('playerLeftMap', {
+      playerId: g.sid,
+      mapId: g.mapId
+    });
     game.destroy();
   });
 
   // Network socket events
-  socket.on('connected', function(data) {
-    Game.connected = true;
+  Game.connected = true;
+  console.log('connected data data', socket, g.currentPlayer);
+  // g.sid     = data.id;
+  g.playerName = 'Ari';
+  // g.playerName = prompt("Please enter your name") || 'Player';
+  g.socket.emit('setPlayerName', { name: g.playerName });
 
-    g.sid     = data.id;
-    g.playerName = 'Player'; //prompt("Please enter your name") || 'Player';
-    g.socket.emit('setPlayerName', { name: g.playerName });
-    g.socket.emit('getMap', { mapId: g.mapId });
+  g.socket.on('playerDetails', function(data) {
+    g.sid = data.id;
+    console.log('GAME GAME', game);
     game.state.start('Boot');
-    // Game.socket.id = data.id;
-    // var mapId = data.mapId || 'lobby';
-    // Game.mapId = mapId;
-    // socket.emit('getMap', {
-    //   mapId: mapId
-    // });
-  });
-
-  game.socket.on('getMap', function(data) {
-    if (data.map) {
-      g.mapData[data.mapId] = data.map;
-      if (g.initialized) {
-        game.cache.addTilemap('map:' + data.mapId, null, Game.arrayToCSV(data.map), Phaser.Tilemap.CSV);
-      }
-    }
   });
 
 });

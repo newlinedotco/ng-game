@@ -10,10 +10,15 @@ server.listen(port, function() {
   console.log("Running on port ", port);
 });
 
-app.use(express.static(path.join(__dirname, '../client/production'), { maxAge: 86400000 }));
+var staticPath = path.join(__dirname, '../client/production');
+if (process.env.NODE_ENV !== "production") {
+  staticPath = path.join(__dirname, '../client/dist')
+}
+
+app.use(express.static(staticPath, { maxAge: 86400000 }));
 
 app.get('/', function(req, res) {
-  res.sendfile(path.join(__dirname, '../client/production/index.html'));
+  res.sendfile(path.join(staticPath, 'index.html'));
 });
 
 require('./routes/io.js')(app, io);

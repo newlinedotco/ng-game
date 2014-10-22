@@ -34,7 +34,7 @@
   };
 
   Player.prototype.addShotPoints = function(data) {
-    this.score += 10;
+    this.points += 10;
   };
 
   Player.prototype.wasHit = function() {

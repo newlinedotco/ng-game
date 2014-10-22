@@ -81,7 +81,7 @@ module.exports = (function(Game) {
       // Music
       this.menu_music = game.add.audio('menu_music');
       this.dink       = game.add.audio('dink');
-      // this.menu_music.play();
+      this.menu_music.play();
     },
 
     playGame: function() {

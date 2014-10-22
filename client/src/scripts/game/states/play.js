@@ -75,6 +75,12 @@ module.exports = (function(Game) {
       this.livesGroup.y = 5;
       this.livesGroup.alpha = 0;
 
+      // Add bullets
+      for(var i = 0; i<this.hero.numBullets; i++){
+        var bullet = new Game.Prefabs.Bullet(this.game, 0, 0, this.hero);
+        this.bullets.add(bullet);
+      }
+
       // Score
       this.score = 0;
       this.scoreText = this.game.add.bitmapText(10, this.game.height - 27, 'architectsDaughter', 'Score: 0', 16);
@@ -101,33 +107,64 @@ module.exports = (function(Game) {
       gamePlay.game.scope
           .$emit('game:newPlayer', gamePlayer);
 
-      console.log('setting up multiplayer', Game.multiplayer, Game.mapId);
       if (Game.multiplayer) {
         // Helpers
-        var removePlayer = function(player) {
+        var removePlayer = function(player, map) {
           g.remotePlayers.splice(g.remotePlayers.indexOf(player), 1);
           Game.toRemove.push(player);
-          gamePlay.game.scope.$emit('game:removePlayer', player);
+          gamePlay.game.scope.$emit('game:removePlayer', {
+            player: player,
+            mapId: map
+          });
         }
 
         // Handlers
-        this.game.socket.on('newPlayer', function(data) {
-          if (g.hero && data.id !== g.sid) {
-            g.toAdd.push(data);
-            gamePlay.game.scope
-              .$emit('game:newPlayer', data);
+        this.game.socket.on('gameUpdated:add', function(data) {
+          console.log('gameUpdated:add');
+          var allPlayers = data.allPlayers,
+              newPlayers = [];
+          
+          for (var i = 0; i < allPlayers.length; i++) {
+            var playerInQuestion = allPlayers[i];
+
+            if (playerInQuestion.id === g.hero.id) {
+              // Nope, we're already added
+            } else if (Game.playerById(playerInQuestion.id)) {
+              // Nope, we already know about 'em
+            } else {
+              g.toAdd.push(playerInQuestion);
+              gamePlay.game.scope.$emit('game:newPlayer', playerInQuestion);
+            }
           }
         });
 
-        this.game.socket.on('removePlayer', function(data) {
-          var player = Game.playerById(data.id);
+        this.game.socket.on('gameUpdated:remove', function(data) {
+          var allPlayers = g.remotePlayers,
+              newPlayerList = data.allPlayers,
+              newPlayers = [];
 
-          if (!player) {
-            console.log("Player not found by id: ", data.id);
-            return;
+          var mapId = data.map;
+          
+          for (var i = 0; i < allPlayers.length; i++) {
+            var playerInQuestion = allPlayers[i];
+
+            if (playerInQuestion.id === g.hero.id) {
+              // Nope, we're already added
+            } else {
+              var found = false;
+              for (var i = 0; i < newPlayerList.length; i++) {
+                if (newPlayerList[i].id === playerInQuestion.id) {
+                  // The player is in the new player list
+                  // so we don't have to remove them
+                  found = true;
+                }
+              }
+              if (!found) {
+                // We can remove this player
+                removePlayer(playerInQuestion, mapId);
+              }
+            }
           }
-
-          removePlayer(player);
         });
 
         this.game.socket.on('updatePlayers', function(data) {
@@ -356,17 +393,8 @@ module.exports = (function(Game) {
 
       // Create bullets
       var bullet, bulletPosY;
-      for(var i=-1; i<this.hero.numBullets; i+=2){
-        bullet = this.bullets.getFirstExists(false);
-        if(!bullet){
-          bullet = new Game.Prefabs.Bullet(this.game, 0, 0, this.hero);
-          this.bullets.add(bullet);
-        }
-
-        // bulletPosY = this.hero.y;
-        // if(this.hero.numBullets > 1){
-        //   bulletPosY = this.hero.y - ((this.hero.height-5)/2)*i;
-        // }
+      bullet = this.bullets.getFirstExists(false);
+      if(bullet) {
 
         bullet.reset(this.hero.x, this.hero.y);
         // Shoot the darn thing
@@ -393,6 +421,7 @@ module.exports = (function(Game) {
             this.game.physics.arcade.overlap(
               this.bullets, remotePlayer, this.hitARemotePlayer, null, this);
           }, this);
+
         // }, this);
       } else {
         // Single player mode requires enemies
@@ -475,6 +504,9 @@ module.exports = (function(Game) {
     },
 
     hitARemotePlayer: function(player, bullet) {
+      if (!player.shieldsEnabled) {
+        player.showExplosion();
+      }
       bullet.kill();
     },
     

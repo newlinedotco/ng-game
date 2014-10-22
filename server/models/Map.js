@@ -4,6 +4,7 @@
   
   var Map = function(config) {
     this.id = config.id;
+    this.createdAt = new Date().getTime();
 
     this.players = config.players || [];
   };
@@ -34,6 +35,7 @@
     });
     return {
       id: this.id,
+      createdAt: this.createdAt,
       players: players
     }
   };

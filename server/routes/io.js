@@ -30,9 +30,29 @@ module.exports =
       socket.on('newPlayer', onNewPlayer);
       socket.on('updatePlayer', onUpdatePlayer);
       socket.on('disconnect', onDisconnect);
+      socket.on('playerLeftMap', onPlayerLeftMap);
       socket.on('shotbullet', onShotBullet);
       socket.on('playerHit', onPlayerHit);
+      socket.on('setPlayerName', onSetPlayerName);
+
+      // Get all the maps
+      socket.on('getMaps', onGetMaps);
     });
+  };
+
+  function onSetPlayerName(data) {
+    console.log('onSetPlayerName', data);
+    // Send details to player
+    this.emit('playerDetails', {
+      id: this.id
+    });
+  }
+  function onGetMaps() {
+    var maps = [];
+    for (var k in g.maps) {
+      maps.push(g.maps[k].serialize());
+    }
+    this.emit('getAllMaps', maps);
   };
 
   function onNewPlayer(data) {
@@ -49,21 +69,32 @@ module.exports =
 
     if (!g.maps[data.mapId]) {
       util.log("Game doesn't exist yet. Creating game: " + data.mapId);
-      g.maps[data.mapId] = new Map({
-        id: data.mapId
-      })
-    }
+      var map = new Map({id: data.mapId});
+      g.maps[data.mapId] = map;
+      g.io.emit('newMapCreated', map.serialize());
+    };
 
     if (!player.inMap(data.mapId)) {
-      this.broadcast.to(data.mapId)
-        .emit('newPlayer', player.serialize());
+      player.joinMap(g.maps[data.mapId]);
 
-      for (var i = 0, p = g.maps[data.mapId].players; i < p.length; i++) {
-        this.emit('newPlayer', p[i].serialize());
-      }
+      this.broadcast.to(data.mapId)
+        .emit('gameUpdated:add', {
+          player: player.serialize(),
+          map: data.mapId,
+          allPlayers: g.maps[data.mapId].players
+        });
 
       this.join(data.mapId);
-      player.joinMap(g.maps[data.mapId]);
+
+      this.emit('gameUpdated:add', {
+        map: data.mapId,
+        allPlayers: g.maps[data.mapId].players
+      });
+
+      g.io.emit('global:newPlayer', {
+        player: player.serialize(),
+        map: data.mapId
+      });
     }
   };
 
@@ -137,17 +168,19 @@ module.exports =
     }
 
     var livingPlayersLeft = livingPlayers(shooter.mapId);
-    if (livingPlayers(shooter.mapId) <= 1) {
+    if (livingPlayersLeft <= 1) {
       var winner = winningPlayer(shooter.mapId);
 
-      var map = g.maps[shooter.mapId.toString()];
       g.io.sockets.to(shooter.mapId)
         .emit('gameOver', {
           winner: winner,
           name: 'Game over'
         });
 
-      map.reset();
+      var map = g.maps[shooter.mapId.toString()];
+      if (map) {
+        delete g.maps[shooter.mapId.toString()];
+      }
     }
   }
 
@@ -160,6 +193,7 @@ module.exports =
 
     util.log("Client has disconnected: " + this.id);
 
+    console.log('index', g.players.indexOf(player));
     g.players.splice(g.players.indexOf(player), 1);
     // this.leave(player.mapId);
 
@@ -168,11 +202,71 @@ module.exports =
       return;
     }
 
-    this.broadcast.to(player.mapId)
-      .emit('removePlayer', { id: this.id });
+    var mapId = player.mapId,
+        map = g.maps[mapId];
 
-    player.leaveMap(g.maps[player.mapId]);
+    // this.broadcast.to(player.mapId)
+    //   .emit('removePlayer', { 
+    //     id: this.id,
+    //     players: map.players
+    //   });
+    player.leaveMap(g.maps[mapId]);
+    map.removePlayer(player);
+
+    this.broadcast.to(mapId)
+      .emit('gameUpdated:remove', {
+        id: this.id,
+        map: mapId,
+        allPlayers: map.players,
+        removedPlayer: player
+      });
+
   };
+
+  function onPlayerLeftMap() {
+    var player = playerById(this.id);
+    if (!player) {
+      util.log("Player not found: " + this.id);
+      return;
+    }
+
+    if (!g.maps[player.mapId]) {
+      util.log("Map not found: " + player.mapId);
+      return;
+    }
+
+    var mapId = player.mapId;
+    var map = g.maps[mapId];
+    map.removePlayer(player);
+    player.leaveMap(g.maps[mapId]);
+
+    g.io.emit('global:playerLeftMap', {
+      id: this.id,
+      mapId: mapId
+    });
+
+    // this.broadcast.to(player.mapId)
+    //   .emit('removePlayer', { 
+    //     id: this.id,
+    //     players: map.players
+    //   });
+  
+    console.log('onPlayerLeftMap', map.players.length);
+    if (map.players.length <= 0) {
+      g.io.emit('global:removeMap', {
+        mapId: mapId
+      });
+      delete g.maps[mapId];
+    } else {
+      this.broadcast.to(mapId)
+        .emit('gameUpdated:remove', {
+          id: this.id,
+          map: mapId,
+          allPlayers: map.players,
+          removedPlayer: player
+        });
+    }
+  }
 
   function playerById(id) {
     for (var i = 0; i < g.players.length; i++) {
