@@ -60,10 +60,10 @@ module.exports = (function(Game) {
           true, g.sio);
       
       this.game.add.existing(this.hero);
-      this.game.add.tween(this.hero)
-        .to({
-          y: this.game.height - (this.hero.height + 20)
-        }, 1500, Phaser.Easing.Exponential.Out, true);
+      // this.game.add.tween(this.hero)
+        // .to({
+        //   y: this.game.height - (this.hero.height + 20)
+        // }, 1500, Phaser.Easing.Exponential.Out, true);
 
       // Display lives
       this.livesGroup = this.game.add.group();
@@ -273,7 +273,7 @@ module.exports = (function(Game) {
         var data = g.toAdd.shift();
         if (data) {
           var toAdd = 
-            this.addPlayer(Game.cpc(data.x), Game.cpc(data.y), data.id);
+            this.addPlayer(data.x, data.y, data.id);
           g.remotePlayers.push(toAdd);
         }
       }

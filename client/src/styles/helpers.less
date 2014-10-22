@@ -64,3 +64,16 @@
   pointer-events: @value;
   -ms-pointer-events: @value;
 }
+
+.css-gradient(@from: #20416A, @to: #3D69A5) {
+    background-color: @to;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(@from),  to(@to));
+    background-image: -webkit-linear-gradient(top, @from, @to);
+    background-image: -moz-linear-gradient(top, @from, @to);
+    background-image: -o-linear-gradient(top, @from, @to);
+    background-image: -ms-linear-gradient(top, @from, @to);
+    background-image: linear-gradient(top, @from, @to);
+}
+.css-gradient(darken,@amount: 10%, @from: #20416A, @to: #3D69A5){
+    .css-gradient(darken(@from,@amount),darken(@to,@amount));
+}
