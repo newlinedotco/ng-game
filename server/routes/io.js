@@ -173,12 +173,14 @@ module.exports =
 
       g.io.sockets.to(shooter.mapId)
         .emit('gameOver', {
+          mapId: shooter.mapId,
           winner: winner,
           name: 'Game over'
         });
 
       var map = g.maps[shooter.mapId.toString()];
       if (map) {
+        map.players = [];
         delete g.maps[shooter.mapId.toString()];
       }
     }

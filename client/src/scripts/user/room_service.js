@@ -30,6 +30,13 @@ angular.module('app.user')
       $rootScope.$broadcast('map:update', newMap);
     });
 
+    socket.on('gameOver', function(data) {
+      var mapId = data.mapId,
+          map   = getRoomById(mapId);
+
+      console.log('gameOver', data, map);
+    });
+
     socket.on('global:playerLeftMap', function(data) {
       var mapId = data.mapId,
           map   = getRoomById(mapId);

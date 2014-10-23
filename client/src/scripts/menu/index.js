@@ -1,7 +1,5 @@
 module.exports = 
-angular.module('app.menu', [
-  require('./play_button').name
-])
+angular.module('app.menu', [])
 .config(function($stateProvider) {
   $stateProvider
     .state('menu', {
@@ -19,5 +17,4 @@ angular.module('app.menu', [
     })
 })
 
-// require('./HomeCtrl');
 require('./menu_controller');
