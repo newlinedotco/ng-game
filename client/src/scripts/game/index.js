@@ -11,7 +11,6 @@ angular.module('app.game', ['ui.router', 'app.user'])
       url: '/:id',
       template: '<div>\
         <div id="gameCanvas" game-canvas="players" map-id="mapId"></div>\
-        <div id="orientation"></div>\
       </div>',
       controller: 'GameController',
       onEnter: function(Game) {

@@ -68,19 +68,6 @@ module.exports = (function(Game) {
 
     handleResizeEvent: function() {
       this.resizeCanvasToContainerElement();
-    },
-
-    enterIncorrectOrientation: function(){
-      Game.orientated = false;
-      document.getElementById('orientation').style.display = 'block';
-      this.game.paused = true;
-    },
-
-    leaveIncorrectOrientation: function(){
-      Game.orientated = true;
-      this.game.paused = false;
-      this.scale.setScreenSize(true);
-      document.getElementById('orientation').style.display = 'none';
     }
   }
 
