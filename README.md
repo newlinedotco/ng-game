@@ -22,9 +22,3 @@ $ node index.js
 ```
 
 That's it! Then head to your browser to: `http://localhost:8000` and see the wonder
-
-Set up
-
-$ ngrok -config=./ngrok.conf start  server
-$ node multiplex.js
-
