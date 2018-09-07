@@ -12,7 +12,7 @@ server.listen(port, function() {
 
 var staticPath = path.join(__dirname, '../client/production');
 if (process.env.NODE_ENV !== "production") {
-  staticPath = path.join(__dirname, '../client/dist')
+  staticPath = path.join(__dirname, '../client/production')
 }
 
 app.use(express.static(staticPath, { maxAge: 86400000 }));
